@@ -1,0 +1,29 @@
+<div class="verify-container">
+  <div class="verify-card">
+
+    <h2>Verificar tu Cuenta</h2>
+    <p>Hemos enviado un código de verificación al correo:</p>
+
+    <p class="email-display">{{ email || 'cargando email...' }}</p>
+
+    <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+      <label>Ingresa tu código de verificación:</label>
+
+      <div class="otp-inputs-single">
+        <input
+          type="text"
+          id="otp"
+          maxlength="10"
+          inputmode="numeric"
+          placeholder="Ingresa el código que hemos enviado"
+          formControlName="codigoOtp"
+        />
+        </div>
+
+      <button type="submit" class="submit-btn" [disabled]="verifyForm.invalid || isLoading">
+        {{ isLoading ? 'Verificando...' : 'Verificar Cuenta' }}
+      </button>
+    </form>
+
+  </div>
+</div>
