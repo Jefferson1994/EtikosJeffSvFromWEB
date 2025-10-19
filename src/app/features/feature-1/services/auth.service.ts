@@ -29,7 +29,7 @@ export class AuthService {
 
     }
 
-    console.log('Usuario guardado en localStorage:', response.user);
+    //console.log('Usuario guardado en localStorage:', response.user);
     this.userSource.next(response);
   }
 
@@ -54,9 +54,9 @@ export class AuthService {
           message: 'Sesión restaurada' // Propiedad necesaria según tu interfaz
         };
         this.userSource.next(restoredUser);
-        console.log('Sesión restaurada desde el almacenamiento local.');
+        //console.log('Sesión restaurada desde el almacenamiento local.');
       } catch (e) {
-        console.error('Error al restaurar la sesión:', e);
+        //console.error('Error al restaurar la sesión:', e);
         this.logout(); // Si el JSON está corrupto, cerramos la sesión
       }
     }
@@ -100,9 +100,9 @@ export class AuthService {
       // 5. Notifica a los suscriptores con el UserResponse actualizado
       this.userSource.next(updatedUserResponse);
 
-      console.log('AuthService: Estado 2FA actualizado y guardado:', updatedUser);
+      //console.log('AuthService: Estado 2FA actualizado y guardado:', updatedUser);
     } else {
-      console.error('AuthService: No se pudo actualizar el estado 2FA, usuario no logueado.');
+      //console.error('AuthService: No se pudo actualizar el estado 2FA, usuario no logueado.');
     }
   }
 
@@ -116,7 +116,7 @@ export class AuthService {
           return respuesta;
 
         } catch (error) {
-          console.error('Error al crear el usuario:', JSON.stringify(error));
+          //console.error('Error al crear el usuario:', JSON.stringify(error));
           let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
           if (error instanceof Error) {
             errorMessage = error.message;
