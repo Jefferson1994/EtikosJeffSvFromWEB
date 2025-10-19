@@ -1,0 +1,135 @@
+<div class="reset-container">
+    <div class="reset-card">
+
+        <h2>Restablecer Contraseña</h2>
+
+        <p class="subtitle">
+            <!-- Muestra el email obtenido de los queryParams de la URL -->
+            Ingresa el código que enviamos a: <strong class="email-display">{{ email || 'Tu Correo' }}</strong>
+        </p>
+
+        <!-- Conectamos la forma con el método onSubmit del componente y le pasamos el formulario completo. -->
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+            <!-- CAMPO: Código de Verificación (OTP) -->
+            <div class="form-group">
+                <label for="otp">Código de Verificación (OTP)</label>
+                <input
+                    type="text"
+                    id="otp"
+                    name="codigoOtp"
+                    placeholder="Ingresa el código de 6 dígitos"
+                    maxlength="6"
+                    inputmode="numeric"
+                    required
+                    minlength="6"
+                    pattern="[0-9]*"
+                    [(ngModel)]="formData.codigoOtp"
+                    #otpControl="ngModel"
+                    [class.is-invalid]="otpControl.invalid && otpControl.touched"
+                />
+                <div *ngIf="otpControl.invalid && otpControl.touched" class="error-message">
+                    <span *ngIf="otpControl.errors?.['required']">El código OTP es obligatorio.</span>
+                    <span *ngIf="otpControl.errors?.['minlength']">Debe tener 6 dígitos.</span>
+                    <span *ngIf="otpControl.errors?.['pattern']">Solo se permiten números.</span>
+                </div>
+            </div>
+
+            <!-- CAMPO: Nueva Contraseña (Con toggle de visibilidad) -->
+            <!-- Usamos form-group-password para posicionar el ícono del ojo -->
+            <div class="form-group form-group-password">
+                <label for="password">Nueva Contraseña</label>
+                <!-- El tipo del input se alterna entre 'text' y 'password' basado en showNewPassword -->
+                <input
+                    [type]="showNewPassword ? 'text' : 'password'"
+                    id="password"
+                    name="nuevaContrasena"
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                    minlength="8"
+                    [(ngModel)]="formData.nuevaContrasena"
+                    (ngModelChange)="checkPasswordMatch()"
+                    #passwordControl="ngModel"
+                    [class.is-invalid]="passwordControl.invalid && passwordControl.touched"
+                />
+                <!-- Botón para alternar visibilidad -->
+                <button
+                    type="button"
+                    class="toggle-password-btn"
+                    (click)="toggleNewPasswordVisibility()"
+                    title="Mostrar/Ocultar Contraseña">
+                    <!-- Icono de ojo (visible) -->
+                    <svg *ngIf="!showNewPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                      <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.973 0 9.19 3.226 10.675 7.69.12.362.12.752 0 1.114-1.485 4.472-5.702 7.69-10.675 7.69-4.973 0-9.19-3.227-10.675-7.69a1.762 1.762 0 010-1.114zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                    </svg>
+                    <!-- Icono de ojo tachado (oculto) -->
+                    <svg *ngIf="showNewPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M3.53 2.454a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18z" />
+                      <path fill-rule="evenodd" d="M22.094 11.447c-.1.353-.243.682-.418.995l-7.206-7.206a4.5 4.5 0 00-5.83.69l-.75-.75a.75.75 0 10-1.06 1.06l.75.75c-1.524 1.757-2.738 3.907-3.62 6.223-.483 1.258-.483 2.516 0 3.774 1.485 4.472 5.702 7.69 10.675 7.69 1.583 0 3.125-.333 4.56-1.026l1.399 1.399a.75.75 0 101.06-1.06l-2.074-2.073c.484-.694.908-1.487 1.253-2.348 1.484-4.472 1.484-9.243 0-13.715zM20.25 12a8.625 8.625 0 00-2.313-5.228l-1.096 1.096a6 6 0 016.92 6.92l-1.096-1.096z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <div *ngIf="passwordControl.invalid && passwordControl.touched" class="error-message">
+                    <span *ngIf="passwordControl.errors?.['required']">La nueva contraseña es obligatoria.</span>
+                    <span *ngIf="passwordControl.errors?.['minlength']">Debe tener al menos 8 caracteres.</span>
+                </div>
+            </div>
+
+            <!-- CAMPO: Confirmar Contraseña (Con toggle de visibilidad) -->
+            <!-- Usamos form-group-password para posicionar el ícono del ojo -->
+            <div class="form-group form-group-password">
+                <label for="confirm-password">Confirmar Contraseña</label>
+                <!-- El tipo del input se alterna entre 'text' y 'password' basado en showConfirmPassword -->
+                <input
+                    [type]="showConfirmPassword ? 'text' : 'password'"
+                    id="confirm-password"
+                    name="confirmarContrasena"
+                    placeholder="Repite la nueva contraseña"
+                    required
+                    [(ngModel)]="formData.confirmarContrasena"
+                    (ngModelChange)="checkPasswordMatch()"
+                    #confirmPasswordControl="ngModel"
+                    [class.is-invalid]="confirmPasswordControl.touched && !passwordsMatch"
+                />
+                <!-- Botón para alternar visibilidad -->
+                <button
+                    type="button"
+                    class="toggle-password-btn"
+                    (click)="toggleConfirmPasswordVisibility()"
+                    title="Mostrar/Ocultar Contraseña">
+                    <!-- Icono de ojo visible (ocultar) -->
+                    <svg *ngIf="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                      <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.973 0 9.19 3.226 10.675 7.69.12.362.12.752 0 1.114-1.485 4.472-5.702 7.69-10.675 7.69-4.973 0-9.19-3.227-10.675-7.69a1.762 1.762 0 010-1.114zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
+                    </svg>
+                    <!-- Icono de ojo tachado (mostrar) -->
+                    <svg *ngIf="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                      <path d="M3.53 2.454a.75.75 0 00-1.06 1.06l18 18a.75.75 0 101.06-1.06l-18-18z" />
+                      <path fill-rule="evenodd" d="M22.094 11.447c-.1.353-.243.682-.418.995l-7.206-7.206a4.5 4.5 0 00-5.83.69l-.75-.75a.75.75 0 10-1.06 1.06l.75.75c-1.524 1.757-2.738 3.907-3.62 6.223-.483 1.258-.483 2.516 0 3.774 1.485 4.472 5.702 7.69 10.675 7.69 1.583 0 3.125-.333 4.56-1.026l1.399 1.399a.75.75 0 101.06-1.06l-2.074-2.073c.484-.694.908-1.487 1.253-2.348 1.484-4.472 1.484-9.243 0-13.715zM20.25 12a8.625 8.625 0 00-2.313-5.228l-1.096 1.096a6 6 0 016.92 6.92l-1.096-1.096z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <!-- Mensaje de error de no coincidencia -->
+                <div class="error-message" *ngIf="confirmPasswordControl.touched && !passwordsMatch">
+                    <span>Las contraseñas no coinciden.</span>
+                </div>
+            </div>
+
+            <!-- Botón de Envío -->
+            <button
+                type="submit"
+                class="submit-btn"
+                [disabled]="f.invalid || !passwordsMatch || isLoading">
+                <span *ngIf="!isLoading">Restablecer Contraseña</span>
+                <span *ngIf="isLoading">Cargando...</span>
+            </button>
+        </form>
+
+        <div class="back-link">
+            <!-- El enlace ahora funciona gracias a la importación de RouterLink en el componente TypeScript -->
+            <a [routerLink]="['/login']">Volver a Iniciar Sesión</a>
+        </div>
+
+    </div>
+</div>

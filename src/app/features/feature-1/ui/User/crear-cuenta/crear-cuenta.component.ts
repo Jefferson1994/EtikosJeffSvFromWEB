@@ -58,6 +58,7 @@ export class CrearCuentaComponent implements OnInit {
     }
 
     try {
+      this.loadingService.show();
       const respuesta: CrearUsuarioResponse = await this.crearUserUseCase.execute(this.registro);
       this.alertService.showSuccess(respuesta.mensaje).then(() => {
         this.closeModal();
@@ -82,6 +83,8 @@ export class CrearCuentaComponent implements OnInit {
 
       this.alertService.showError(errorMessage);
       // Muestra un mensaje de error al usuario
+    }finally {
+      this.loadingService.hide();
     }
   }
 

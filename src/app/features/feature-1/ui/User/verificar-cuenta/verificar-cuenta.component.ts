@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router'; // Importar ActivatedRoute
+import { ActivatedRoute, Router } from '@angular/router';
+import { usuarioVerificarCuentaUseCase } from '../../../domain/use-cases/use-caseUsuario/userValidarCuenta-case';
+import { AlertService } from '../../../services/alert.service';
+import { LoadingService } from '../../../services/loading.service';
+import { userResponseEstandar, UserverificarCuenta } from '../../../domain/models/userModelos';
+
 // import { AuthService } from '../auth.service';
 // import { AlertService } from '../alert.service';
 
@@ -19,21 +24,25 @@ import { ActivatedRoute, Router } from '@angular/router'; // Importar ActivatedR
 export class VerificarCuentaComponent implements OnInit {
 
   verifyForm: FormGroup;
-  email: string | null = null; // Aquí guardaremos el email
+  email: string | null = null;
   isLoading = false;
+
+  private alertService = inject(AlertService);
+  private loadingService = inject(LoadingService);
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute, // 1. Inyecta ActivatedRoute para leer la URL
+    private route: ActivatedRoute,
     private router: Router,
-    // private authService: AuthService,
-    // private alertService: AlertService
+    private verificar: usuarioVerificarCuentaUseCase,
+
   ) {
     this.verifyForm = this.fb.group({
       // Usaremos un solo campo (la Opción 1 flexible que discutimos)
       codigoOtp: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
 
   ngOnInit(): void {
     // 2. Lee el parámetro 'email' de la URL al cargar
@@ -49,7 +58,7 @@ export class VerificarCuentaComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.verifyForm.invalid || !this.email) {
       return;
     }
@@ -59,30 +68,37 @@ export class VerificarCuentaComponent implements OnInit {
 
     console.log('Enviando para verificar:', this.email, codigoOtp);
 
-    // --- Lógica de llamada al servicio (descomentar cuando lo tengas) ---
-    /*
-    this.authService.verificarCuenta(this.email, codigoOtp).subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        this.alertService.showSuccess('¡Cuenta verificada! Ya puedes iniciar sesión.');
-        this.router.navigate(['/login']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.alertService.showError(err.error.message || 'Código incorrecto o expirado.');
-      }
-    });
-    */
+    try {
+      this.loadingService.show();
+      const datosVerificacion: UserverificarCuenta = {
+        correo: this.email,
+        codigoOtp: codigoOtp
+      };
 
-    // Simulación (borra esto después)
-    setTimeout(() => {
-      this.isLoading = false;
-      if (codigoOtp === '123456') {
-         console.log('¡Éxito! Redirigiendo a login...');
-         this.router.navigate(['/login']);
-      } else {
-         console.log('Código incorrecto');
+      const respuesta: userResponseEstandar = await this.verificar.execute(datosVerificacion);
+      this.alertService.showSuccess(respuesta.message).then(() => {
+        this.router.navigate(
+          ['/login'],
+        );
+      });
+      console.log('Usuario creado exitosamente:', respuesta);
+      //this.closeModal();
+
+
+    } catch (error) {
+      console.error('Error al crear el usuario:', JSON.stringify(error));
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      if (error instanceof Error) {
+        errorMessage = error.message;
       }
-    }, 1500);
+
+
+      this.alertService.showError(errorMessage);
+      // Muestra un mensaje de error al usuario
+    } finally {
+      this.loadingService.hide();
+    }
+
+
   }
 }

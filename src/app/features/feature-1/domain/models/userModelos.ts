@@ -4,6 +4,12 @@ export interface UserCredentials {
   password: string;
 }
 
+export interface cambiarPassword {
+  contrasenaActual: string;
+  nuevaContrasena: string;
+}
+
+
 // src/app/features/feature-1/domain/models/userModelos.ts
 // ✅ Define esta interfaz para que coincida con la respuesta de tu API
 export interface UserResponse {
@@ -17,6 +23,7 @@ export interface UserResponse {
     numero_identificacion: string;
     creado_en: string;
     activo: number;
+    autentificacion_dos_pasos_activa: number; // 1 o 0
     negociosAdministrados: any[]; // O tipar con una interfaz si conoces la estructura
     rol: {
       id: number;
@@ -64,6 +71,42 @@ export interface CrearUsuarioDTO {
   numero_telefono: string;
   numero_identificacion: string;
 }
+
+export interface bloquearUsuario {
+  numero_identificacion: string;
+}
+
+export interface solicitudRecuperarContrasenia {
+  email: string;
+}
+
+export interface cambiarContraseinaConCodigoOTP {
+  email: string;
+  codigoOtp: string;
+  nuevaContrasena: string;
+}
+
+
+
+export interface UserverificarCuenta {
+  correo: string;
+  codigoOtp: string;
+}
+
+export interface userResponseEstandar {
+  success: boolean;
+  message: string;
+}
+
+export interface userCambiarPassword {
+  contrasenaActual: string;
+  nuevaContrasena: string;
+}
+
+export interface activaDesactivar2FA {
+  activar: Boolean;
+}
+
 
 export interface CrearUsuarioResponse {
   mensaje: string;
@@ -120,7 +163,7 @@ export interface NegocioVinculado {
   horario_apertura: string;
   horario_cierre: string;
   id_administrador: number;
-  creado_en: string; 
+  creado_en: string;
 }
 
 

@@ -1,0 +1,33 @@
+<div class="page-container">
+ <div class="security-card">
+  <h2>Autenticación de Dos Pasos (2FA)</h2>
+  <p class="subtitle">Añade una capa extra de seguridad a tu cuenta.</p>
+  <hr class="divider">
+  <div class="setting-row">
+   <div class="setting-text">
+    <h4>Autenticación por Correo y SMS</h4>
+    <p>
+     Si activas esta opción, te enviaremos un código de seguridad
+     a tu correo y teléfono cada vez que intentes iniciar sesión.
+    </p>
+   </div>
+   <div class="setting-action">
+    <label class="toggle-switch">
+     <input
+      type="checkbox"
+      id="2fa-toggle"
+      (change)="on2FAToggleChange($event)"
+      [checked]="is2FAActive"
+      [disabled]="isLoading"
+     >
+     <span class="slider"></span>
+    </label>
+   </div>
+  </div>
+  <div class="status-display">
+   Estado actual:
+   <span *ngIf="is2FAActive" class="status-active">Activo</span>
+   <span *ngIf="!is2FAActive" class="status-inactive">Inactivo</span>
+  </div>
+ </div>
+</div>

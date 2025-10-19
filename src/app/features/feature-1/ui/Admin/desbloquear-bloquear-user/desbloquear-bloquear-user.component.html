@@ -1,0 +1,50 @@
+<div class="page-container">
+ <div class="manage-user-card">
+
+  <h2>Administrar Usuario</h2>
+  <p class="subtitle">Busca un usuario por su número de identificación para bloquear o desbloquear su cuenta.</p>
+  <hr class="divider">
+
+  <div class="search-section">
+      <div class="search-input-group">
+        <label for="cedula">Cédula / Identificación</label>
+        <input
+        type="text"
+        id="cedula"
+        name="cedula"
+        class="form-control"
+        [(ngModel)]="cedulaData().cedula"
+        (ngModelChange)="onBuscarColaborador()"
+        required
+        placeholder="Ingresa 10 dígitos y presiona Enter"
+        maxlength="10"
+        [disabled]="loading" >
+        <div *ngIf="!loading && !colaboradorData() && cedulaData().cedula.length === 10" class="error-message">
+        Usuario no encontrado.
+        </div>
+      </div>
+  </div>
+
+  <div *ngIf="colaboradorData() as colaborador" class="results-section"> <h3>Usuario Encontrado</h3>
+   <div class="user-details">
+    <p><strong>Nombre:</strong> {{ colaborador.nombre }}</p>
+    <p><strong>Correo:</strong> {{ colaborador.correo }}</p>
+    <p><strong>Rol:</strong> {{ colaborador.rol?.nombre || 'N/A' }}</p> <p>
+     <strong>Estado Actual:</strong>
+     <span *ngIf="colaborador.activo === 1" class="status-active">Activo</span>
+     <span *ngIf="colaborador.activo === 0" class="status-inactive">Bloqueado</span>
+    </p>
+   </div>
+
+   <div class="action-button">
+    <button *ngIf="colaborador.activo === 1" class="btn btn-danger" (click)="cambiarEstado(0)" [disabled]="isProcessing() || isAdminFound()">
+     {{ isProcessing() ? 'Bloqueando...' : 'Bloquear Usuario' }}
+    </button>
+    <button *ngIf="colaborador.activo === 0" class="btn btn-success"  (click)="cambiarEstado(1)" [disabled]="isProcessing() || isAdminFound()">
+     {{ isProcessing()? 'Desbloqueando...' : 'Desbloquear Usuario' }}
+    </button>
+   </div>
+  </div>
+
+ </div>
+</div>

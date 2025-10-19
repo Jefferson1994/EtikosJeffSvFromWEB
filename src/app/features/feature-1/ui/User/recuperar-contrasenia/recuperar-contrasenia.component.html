@@ -1,0 +1,40 @@
+<div class="forgot-password-container">
+  <div class="forgot-password-card">
+
+    <h2>Recuperar Contraseña</h2>
+    <p class="subtitle">Ingresa tu correo electrónico y te enviaremos un código para restablecer tu contraseña.</p>
+
+    <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="tu.correo@ejemplo.com"
+          formControlName="email"
+          [class.is-invalid]="emailControl.invalid && (emailControl.dirty || emailControl.touched)"
+        />
+
+        <div *ngIf="emailControl.invalid && (emailControl.dirty || emailControl.touched)" class="error-message">
+          <span *ngIf="emailControl.errors?.['required']">
+            El correo es obligatorio.
+          </span>
+          <span *ngIf="emailControl.errors?.['email']">
+            Ingresa un correo válido.
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="forgotPasswordForm.invalid || isLoading">
+        {{ isLoading ? 'Enviando...' : 'Enviar Código de Recuperación' }}
+      </button>
+
+    </form>
+
+    <div class="back-link">
+      <a routerLink="/login">Volver a Iniciar Sesión</a>
+    </div>
+
+  </div>
+</div>

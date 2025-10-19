@@ -19,7 +19,7 @@ export class crearProductoUseCase {
     } catch (error) {
       console.error('Error en el caso de uso al obtener empresas:', error);
       // Lanza un error más descriptivo que pueda ser manejado por el componente.
-      throw error; 
+      throw error;
     }
   }
 }

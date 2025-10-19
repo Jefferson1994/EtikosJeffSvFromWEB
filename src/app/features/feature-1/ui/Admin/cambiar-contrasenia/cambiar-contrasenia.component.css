@@ -1,0 +1,109 @@
+/* Contenedor principal de la página (área blanca) */
+.page-container {
+  padding: 2rem 3rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Tarjeta principal del formulario */
+.password-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+}
+
+/* Título */
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+
+/* Subtítulo */
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+
+
+/* Grupo de formulario (etiqueta + input) */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+/* Botón de enviar */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+.input-wrapper {
+  position: relative;
+}
+
+/* 2. El input necesita espacio a la derecha para el icono */
+.input-wrapper input {
+  /* Asumo que ya tienes width: 100%, padding, etc. */
+  /* Lo importante es añadir padding a la derecha: */
+  padding-right: 60px; /* Ajusta este valor si "Ocultar" no cabe */
+}
+
+/* 3. Estilos del icono "ojito" */
+.password-toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+  user-select: none; /* Evita que el texto "Ver" se seleccione */
+}
+
+.password-toggle-icon:hover {
+  color: #007bff; /* Color primario al pasar el mouse */
+}

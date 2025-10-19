@@ -1,0 +1,103 @@
+<div class="page-container">
+  <div class="password-card">
+
+    <h2>Cambiar Contraseña</h2>
+    <p class="subtitle">Administra la seguridad de tu cuenta.</p>
+
+    <form (ngSubmit)="onSubmit(changePassForm)" #changePassForm="ngForm" novalidate>
+
+      <div class="form-group">
+        <label for="current-password">Contraseña Actual</label>
+
+        <div class="input-wrapper">
+          <input
+            [type]="showCurrentPassword ? 'text' : 'password'"
+            id="current-password"
+            placeholder="Ingresa tu contraseña actual"
+            name="contrasenaActual"
+            [(ngModel)]="formData.contrasenaActual"
+            required
+            #contrasenaActual="ngModel"
+            [class.is-invalid]="contrasenaActual.invalid && contrasenaActual.touched"
+          />
+          <span class="password-toggle-icon" (click)="showCurrentPassword = !showCurrentPassword">
+            {{ showCurrentPassword ? 'Ocultar' : 'Ver' }}
+          </span>
+        </div>
+
+        <div *ngIf="contrasenaActual.invalid && (contrasenaActual.dirty || contrasenaActual.touched)" class="error-message">
+          <span *ngIf="contrasenaActual.errors?.['required']">
+            La contraseña actual es obligatoria.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="new-password">Nueva Contraseña</label>
+
+        <div class="input-wrapper">
+          <input
+            [type]="showNewPassword ? 'text' : 'password'"
+            id="new-password"
+            placeholder="Mínimo 8 caracteres"
+            name="nuevaContena"
+            [(ngModel)]="formData.nuevaContrasena"
+            required
+            minlength="8"
+            (ngModelChange)="checkPasswordMatch()"
+            #nuevaContrasena="ngModel"
+            [class.is-invalid]="nuevaContrasena.invalid && nuevaContrasena.touched"
+          />
+          <span class="password-toggle-icon" (click)="showNewPassword = !showNewPassword">
+            {{ showNewPassword ? 'Ocultar' : 'Ver' }}
+          </span>
+        </div>
+
+        <div *ngIf="nuevaContrasena.invalid && (nuevaContrasena.dirty || nuevaContrasena.touched)" class="error-message">
+          <span *ngIf="nuevaContrasena.errors?.['required']">
+            La nueva contraseña es obligatoria.
+          </span>
+          <span *ngIf="nuevaContrasena.errors?.['minlength']">
+            Debe tener al menos 8 caracteres.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirmar Contraseña</label>
+
+        <div class="input-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            id="confirm-password"
+            placeholder="Vuelve a escribir la nueva contraseña"
+            name="confirmarContrasena"
+            [(ngModel)]="formData.confirmarContrasena"
+            required
+            (ngModelChange)="checkPasswordMatch()"
+            #confirmarContrasena="ngModel"
+            [class.is-invalid]="(confirmarContrasena.invalid && confirmarContrasena.touched) || (confirmarContrasena.touched && !passwordsMatch)"
+          />
+          <span class="password-toggle-icon" (click)="showConfirmPassword = !showConfirmPassword">
+            {{ showConfirmPassword ? 'Ocultar' : 'Ver' }}
+          </span>
+        </div>
+
+        <div *ngIf="(confirmarContrasena.dirty || confirmarContrasena.touched)" class="error-message">
+          <span *ngIf="confirmarContrasena.errors?.['required']">
+            Debes confirmar la contraseña.
+          </span>
+          <span *ngIf="!passwordsMatch && confirmarContrasena.value">
+            Las contraseñas no coinciden.
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="!changePassForm.valid || !passwordsMatch || isLoading">
+        {{ isLoading ? 'Actualizando...' : 'Actualizar Contraseña' }}
+      </button>
+
+    </form>
+
+  </div>
+</div>

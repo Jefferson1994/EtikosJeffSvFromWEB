@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { LoginUseCase } from '../../../domain/use-cases/use-caseUsuario/login.use-case';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router'; // Importación correcta del Router de Angular
+import { Router, RouterLink } from '@angular/router'; // Importación correcta del Router de Angular
 import { CrearCuentaComponent } from '../crear-cuenta/crear-cuenta.component';
 import { LoadingService } from '../../../services/loading.service';
 import { AlertService } from '../../../services/alert.service';
 @Component({
   selector: 'app-login-app',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, CrearCuentaComponent],
+  imports: [CommonModule, FormsModule, HttpClientModule, CrearCuentaComponent,RouterLink],
   templateUrl: './login-app.component.html',
   styleUrl: './login-app.component.css'
 })
@@ -46,18 +46,12 @@ export class LoginAppComponent {
       console.log('Login successful!', JSON.stringify(response));
       this.authService.login(response);
 
-      if (response.user.rol.nombre === 'Administrador') {
+      if (response.user.rol.nombre === 'Admin') {
         console.log('Redirigiendo a la página de administrador...');
         this.router.navigate(['/admin-dashboard']);
-      } else if (response.user.rol.nombre === 'Colaborador') {
-        console.log('esta en la pagina del Colaborador');
+      } else if (response.user.rol.nombre === 'Usuario') {
+        console.log('esta en la pagina del Usuario');
         this.router.navigate(['/admin-dashboard']);
-      } else if (response.user.rol.nombre === 'Admin Sistema') {
-        console.log('esta en la pagina del Admin Sistema');
-        this.router.navigate(['/admin-dashboard']);
-      }else if (response.user.rol.nombre === 'Cliente') {
-        console.log('esta en la pagina del Cliente');
-        this.router.navigate(['/Cliente-dashboard']);
       }
 
     } catch (error) {

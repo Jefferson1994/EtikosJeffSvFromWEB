@@ -17,7 +17,14 @@
       <button type="submit" class="login-button">Iniciar Sesión</button>
     </form>
 
-    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+    <div class="mt-4 text-center">
+          <a
+            [routerLink]="['/recuperar-contrasenia']"
+            class="forgot-password text-sm text-indigo-600 hover:text-indigo-500 hover:underline transition duration-150"
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
+    </div>
 
     <p class="register-link">
       ¿No tienes una cuenta?

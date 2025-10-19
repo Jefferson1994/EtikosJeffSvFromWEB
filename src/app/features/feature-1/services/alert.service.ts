@@ -15,7 +15,7 @@ export class AlertService {
       title: 'Éxito',
       text: message,
       showConfirmButton: false,
-      timer: 1500
+      timer: 5000
     });
   }
 
