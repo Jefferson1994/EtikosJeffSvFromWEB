@@ -17,6 +17,7 @@ import {
   bloquearUsuario,
   solicitudRecuperarContrasenia,
   cambiarContraseinaConCodigoOTP,
+  LoginResult,
 } from '../../domain/models/userModelos'; // Asegúrate de que los paths sean correctos
 import { UserRepositorio } from '../../domain/repositories/userRepositories/user.repository'; // El contrato del repositorio
 import bodyParser from 'body-parser';
@@ -25,6 +26,9 @@ import bodyParser from 'body-parser';
   providedIn: 'root'
 })
 export class UserApiRepository implements UserRepositorio {
+
+
+
   private readonly http = inject(HttpClient);
 
   //private readonly baseUrl = 'http://localhost:3000/api';
@@ -59,14 +63,14 @@ export class UserApiRepository implements UserRepositorio {
   }
 
   // Publica sin token
-  async LoginUser(credentials: UserCredentials): Promise<UserResponse> {
+  async LoginUser(credentials: UserCredentials): Promise<LoginResult> {
     const url = `${this.baseUrl}user/login`;
     console.log('url armada', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
       // y manejarlo con async/await
-      return await lastValueFrom(this.http.post<UserResponse>(url, credentials));
+      return await lastValueFrom(this.http.post<LoginResult>(url, credentials));
     } catch (error) {
       // El repositorio solo relanza el error. La lógica de manejo
       // específica va en el caso de uso o el componente.
@@ -74,8 +78,47 @@ export class UserApiRepository implements UserRepositorio {
     }
   }
 
-  // Privada con  token
+  //publica sin token
+  async solicitudRecuperarCOntrasenia(userRecuperar:solicitudRecuperarContrasenia ): Promise<userResponseEstandar> {
+    const url = `${this.baseUrl}user/recuperarPasword`;
+    console.log('la url es ', url)
 
+    try {
+      // Usamos lastValueFrom para convertir el Observable en una promesa
+      return await lastValueFrom(this.http.post<userResponseEstandar>(url, userRecuperar));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //publica sin token
+
+  async validarOtpRecuperarContrasenia(userRecuperar:cambiarContraseinaConCodigoOTP ): Promise<userResponseEstandar> {
+    const url = `${this.baseUrl}user/resetPasword`;
+    console.log('la url es ', url)
+
+    try {
+      // Usamos lastValueFrom para convertir el Observable en una promesa
+      return await lastValueFrom(this.http.post<userResponseEstandar>(url, userRecuperar));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  //publica sin token
+  async validarOtpLogin(userRecuperar:UserverificarCuenta ): Promise<LoginResult> {
+    const url = `${this.baseUrl}user/validarOtp2Fa`;
+    console.log('la url es ', url)
+
+    try {
+      // Usamos lastValueFrom para convertir el Observable en una promesa
+      return await lastValueFrom(this.http.post<LoginResult>(url, userRecuperar));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Privada con  token
   async cambiarPassword(cambiarContrasenia: userCambiarPassword): Promise<userResponseEstandar> {
     const url = `${this.baseUrl}user/cambiarContrasenia`;
     try {
@@ -91,7 +134,6 @@ export class UserApiRepository implements UserRepositorio {
   }
 
   //Privada con token
-
   async activar2FA(userActivaDesactiva: activaDesactivar2FA): Promise<userResponseEstandar> {
     const url = `${this.baseUrl}user/activarVerificacion2Fa`;
     try {
@@ -150,85 +192,27 @@ export class UserApiRepository implements UserRepositorio {
     }
   }
 
-  //publica sin token
-  async solicitudRecuperarCOntrasenia(userRecuperar:solicitudRecuperarContrasenia ): Promise<userResponseEstandar> {
-    const url = `${this.baseUrl}user/recuperarPasword`;
-    console.log('la url es ', url)
-
-    try {
-      // Usamos lastValueFrom para convertir el Observable en una promesa
-      return await lastValueFrom(this.http.post<userResponseEstandar>(url, userRecuperar));
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  //publica sin token
-
-  async validarOtpRecuperarContrasenia(userRecuperar:cambiarContraseinaConCodigoOTP ): Promise<userResponseEstandar> {
-    const url = `${this.baseUrl}user/resetPasword`;
-    console.log('la url es ', url)
-
-    try {
-      // Usamos lastValueFrom para convertir el Observable en una promesa
-      return await lastValueFrom(this.http.post<userResponseEstandar>(url, userRecuperar));
-    } catch (error) {
-      throw error;
-    }
-  }
-
-
-
-
-  async RolesActivos(): Promise<RolUsuario[]> { // <-- CAMBIO 1: Devuelve una promesa de un ARREGLO de roles
-    const url = `${this.baseUrl}api//rol`;
-    console.log('la url es en roles', url)
-    try {
-
-      return await lastValueFrom(this.http.post<RolUsuario[]>(url, {}));
-    } catch (error) {
-      // El manejo del error está bien como lo tienes
-      throw error;
-    }
-  }
-
-  async BuscarCiudadano(userBuscar: ValidacionRequest): Promise<ValidacionResponse> {
-    const url = `${this.baseUrl}api/ciudadanos/validar`;
-    //const body = { CrearEmpresaDTO };
-
-    try {
-
-      const response = await lastValueFrom(
-        this.http.post<ValidacionResponse>(url, userBuscar)
-      );
-
-      console.log('Respuesta del API:', response);
-
-      // 2. CORRECCIÓN: Se retorna el objeto 'response' completo.
-      return response;
-    } catch (error) {
-      // El repositorio solo relanza el error. La lógica de manejo
-      // específica va en el caso de uso o el componente.
-      throw error;
-    }
-  }
-
-  async usuarioEmpresasVinculadas(): Promise<RespuestaNegociosVinculados> {
-    const url = `${this.baseUrl}api/empresasVinculadas`;
-
+  //Privada con token
+  async cerrarCesion(): Promise<userResponseEstandar> {
+    const url = `${this.baseUrl}user/cerrarSesion`;
     try {
       const response = await lastValueFrom(
-        this.http.post<RespuestaNegociosVinculados>(url, null) // body vacío como null
+        this.http.post<userResponseEstandar>(url, {})
       );
-
-
-
+      // Bien: Devuelves la respuesta completa
       return response;
     } catch (error) {
-      console.error('Error en la llamada API listar todos los tipos de empresa:', error);
       throw error;
     }
   }
+
+
+
+
+
+
+
+
 
 
 

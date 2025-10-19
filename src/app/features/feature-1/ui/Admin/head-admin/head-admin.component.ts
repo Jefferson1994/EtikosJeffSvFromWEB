@@ -1,6 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { userCerrarSesionUseCase } from '../../../domain/use-cases/use-caseUsuario/userCerrarSesion.use-case';
+import { AlertService } from '../../../services/alert.service';
+import { LoadingService } from '../../../services/loading.service';
 @Component({
   selector: 'app-head-admin',
   standalone: true,
@@ -11,7 +15,14 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class HeadAdminComponent {
 
-  constructor(private authService :AuthService){
+
+  private alertService = inject(AlertService);
+  private loadingService = inject(LoadingService);
+
+  constructor(private authService: AuthService,
+    private cerrarSesionUseCase: userCerrarSesionUseCase,
+    private router: Router
+  ) {
 
   }
   adminName = signal('Admin');
@@ -34,5 +45,31 @@ export class HeadAdminComponent {
 
   toggleProfileMenu() {
     this.profileMenuOpen.update(value => !value);
+  }
+
+  async cerrarSesion() {
+    this.profileMenuOpen.set(false);
+
+    try {
+      this.loadingService.show();
+
+      const response = await this.cerrarSesionUseCase.execute();
+
+      if (response.success) {
+        console.log('Cierre de sesión exitoso. Eliminando credenciales locales.');
+      }
+
+      this.authService.logout();
+
+      this.router.navigate(['/login']);
+
+    } catch (error) {
+      console.error('Error al cerrar sesión (Front/Back):', error);
+      this.authService.logout();
+      this.alertService.showError('Error al cerrar sesión. Por favor, inténtelo de nuevo.');
+      this.router.navigate(['/login']);
+    }finally {
+      this.loadingService.hide();
+    }
   }
 }

@@ -35,6 +35,14 @@ export interface UserResponse {
   token: string;
 }
 
+export interface TwoFactorRequiredResponse {
+  twoFactorRequired: true;
+  message: string;
+}
+
+export type LoginResult = UserResponse | TwoFactorRequiredResponse;
+
+
 export interface UserCredentialsBuscar {
   cedula: string;
 }

@@ -1,0 +1,38 @@
+<div class="modal-backdrop" (click)="preventClosing($event)">
+  <div class="modal-container">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Verificación de Código Único (OTP)</h2>
+      <button class="close-button" (click)="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="instruction-text">
+        Hemos enviado un código de 6 dígitos a tu correo:
+        <span class="user-email-display">{{ userEmail }}</span>
+      </p>
+
+      <form (ngSubmit)="onSubmit(otpForm)" #otpForm="ngForm">
+
+        <div class="otp-input">
+          <input type="text" id="otp-code" class="otp-input" placeholder="Ingrese el código"
+            name="otpCode" required minlength="6" pattern="[0-9]*" [(ngModel)]="otpCode" #code="ngModel">
+        </div>
+
+        <div class="alert-message error" *ngIf="code.invalid && code.touched">
+          El código debe ser de 6 dígitos numéricos.
+        </div>
+
+        <div class="alert-message error" *ngIf="showErrorMessage">
+          El código ingresado es incorrecto o ha expirado.
+        </div>
+
+        <div class="modal-footer">
+          <button class="validate-button" type="submit" [disabled]="otpForm.invalid">
+            Validar Código
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

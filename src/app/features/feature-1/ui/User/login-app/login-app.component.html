@@ -39,5 +39,12 @@
 
       </app-crear-cuenta>
 
+      <app-modal-otp-general
+        *ngIf="showModalOtp"
+        (modalClosed)="onModalOtpClosed()"
+        [userEmail]="email"
+        (otpValidated)="onOtpValidated($event)">
+      </app-modal-otp-general>
+
 
 </div>

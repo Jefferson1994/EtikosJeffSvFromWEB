@@ -29,9 +29,9 @@
 
     @if(profileMenuOpen()) {
       <div class="profile-dropdown">
-        <a href="#" class="dropdown-item">Mi Perfil</a>
-        <a href="#" class="dropdown-item">Configuración</a>
-        <a href="#" class="dropdown-item">Cerrar Sesión</a>
+        <a class="dropdown-item">Mi Perfil</a>
+        <a  class="dropdown-item">Configuración</a>
+        <a  (click)="cerrarSesion()"class="dropdown-item">Cerrar Sesión</a>
       </div>
     }
   </div>

@@ -1,0 +1,150 @@
+/* ---------------------------------------------------- */
+/* 1. Estilos del Modal (Overlay y Contenedor) */
+/* ---------------------------------------------------- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Oscurece el fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* Consistencia con login */
+}
+
+/* Encabezado */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    font-size: 1.4rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-body {
+    padding: 0 5px;
+}
+
+/* Instrucciones y Email */
+.instruction-text {
+    color: #555;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.user-email-display {
+    font-weight: 600;
+    color: #4a90e2; /* Color de enlace/énfasis */
+    display: block;
+    margin-top: 5px;
+}
+
+/* ---------------------------------------------------- */
+/* 2. Estilos del Input Único (SOLUCIÓN al 100%) */
+/* ---------------------------------------------------- */
+/* El div contenedor del input (que en tu HTML es `.otp-input`) */
+.otp-input {
+    width: 100%; /* Asegura que el contenedor ocupe el espacio */
+    margin-bottom: 25px;
+}
+
+/* El input real (asumiendo que tiene la clase `.otp-input` en tu HTML) */
+.otp-input > input.otp-input {
+    width: 100%; /* CLAVE: Ocupa el ancho completo */
+    height: 55px;
+    padding: 12px 10px;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.25rem; /* Separación para simular campos individuales, si se desea */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+}
+
+.otp-input > input.otp-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+/* ---------------------------------------------------- */
+/* 3. Estilos de Alerta y Botones */
+/* ---------------------------------------------------- */
+.alert-message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.error {
+    background-color: #fdeaea;
+    color: #c0392b;
+    border: 1px solid #f9d8d8;
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.validate-button {
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.validate-button:hover {
+    background-color: #357abd;
+}
+
+.resend-button {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 0.9rem;
+    cursor: not-allowed;
+    padding: 8px;
+    transition: color 0.3s;
+}

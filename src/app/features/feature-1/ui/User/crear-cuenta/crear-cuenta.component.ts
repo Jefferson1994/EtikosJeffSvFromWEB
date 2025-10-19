@@ -4,8 +4,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CiudadanoEstandar, CrearUsuarioResponse, RolUsuario } from '../../../domain/models/userModelos';
 import { crearUsuarioUseCase } from '../../../domain/use-cases/use-caseUsuario/crearUsuario.use-case';
-import { buscarUserCiudadanoUseCase } from '../../../domain/use-cases/use-caseUsuario/userBuscarCiudadano.use.case';
-import { UserRolUseCase } from '../../../domain/use-cases/use-caseUsuario/roles.use-case';
 import { Injectable } from '@angular/core';
 import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
 import { AlertService } from '../../../services/alert.service';
@@ -43,7 +41,7 @@ export class CrearCuentaComponent implements OnInit {
 
 
   constructor(private router: Router, private crearUserUseCase: crearUsuarioUseCase,
-    private rolesUseCase: UserRolUseCase, private BuscarUserCiudadanoUseCase: buscarUserCiudadanoUseCase) { }
+    ) { }
 
   async ngOnInit(): Promise<void> {
 
