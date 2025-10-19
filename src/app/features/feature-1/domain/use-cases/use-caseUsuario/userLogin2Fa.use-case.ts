@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { UserApiRepository } from '../../../infrastructure/userServicios/user-api.services';
 import { CrearUsuarioDTO, CrearUsuarioResponse, LoginResult, UserverificarCuenta } from '../../models/userModelos';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { CrearUsuarioDTO, CrearUsuarioResponse, LoginResult, UserverificarCuenta
 })
 export class userLogin2FAUseCase {
 
-  constructor(private readonly repository: UserApiRepository) {}
+  constructor(private readonly repository: UserApiRepository) { }
 
 
   async execute(usuarioVerificarCuenta: UserverificarCuenta): Promise<LoginResult> {
@@ -19,16 +20,31 @@ export class userLogin2FAUseCase {
       console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error: any) {
-      console.error('Error en el caso de uso:', error);
+      console.error('Error en el caso de uso validar otp contras:', error);
 
-      // ✅ CORRECCIÓN: Accede al mensaje de error anidado
-      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
-      if (error && error.error && error.error.mensaje) {
-        errorMessage = error.error.mensaje;
+      let errorMessage = 'Error de red. No fue posible conectar con el servidor.';
+      if (error instanceof HttpErrorResponse) {
+
+        const errorBody = error.error;
+
+        if (errorBody) {
+          if (typeof errorBody === 'object' && errorBody.message) {
+            errorMessage = errorBody.message;
+          } else if (typeof errorBody === 'object' && errorBody.mensaje) {
+            errorMessage = errorBody.mensaje;
+          } else if (typeof errorBody === 'string') {
+            errorMessage = errorBody;
+          }
+        }
+        if (errorMessage === 'Error de red. No fue posible conectar con el servidor.') {
+          errorMessage = `Error de servidor (${error.status}): ${error.statusText || 'Error desconocido'}`;
+        }
+
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
       }
+      throw new Error(errorMessage)
 
-      // ✅ Lanza un nuevo error con el mensaje de la API
-      throw new Error(errorMessage);
     }
   }
 
