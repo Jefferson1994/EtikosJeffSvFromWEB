@@ -34,7 +34,7 @@ export class ModalOtpGeneralComponent {
 
   async onSubmit(form: NgForm): Promise<void> {
     if (form.invalid) {
-      console.warn("El formulario OTP es inválido o está incompleto.");
+      //console.warn("El formulario OTP es inválido o está incompleto.");
       return;
     }
 
@@ -48,13 +48,13 @@ export class ModalOtpGeneralComponent {
           const respuesta: LoginResult = await this.UserLogin2FAUseCase.execute(datosVerificacion);
           this.alertService.showSuccess(respuesta.message)
           this.otpValidated.emit(respuesta);
-          console.log('Usuario creado exitosamente:', respuesta);
+          //console.log('Usuario creado exitosamente:', respuesta);
           this.closeModal();
           //this.closeModal();
 
 
         } catch (error) {
-          console.error('Error al crear el usuario:', JSON.stringify(error));
+          //console.error('Error al crear el usuario:', JSON.stringify(error));
           let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
           if (error instanceof Error) {
             errorMessage = error.message;
@@ -68,7 +68,7 @@ export class ModalOtpGeneralComponent {
       }
 
 
-    console.log(`✅ Código OTP recolectado: ${this.otpCode}`);
+    //console.log(`✅ Código OTP recolectado: ${this.otpCode}`);
 
 
   }

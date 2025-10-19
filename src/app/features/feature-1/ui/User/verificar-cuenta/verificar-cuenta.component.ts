@@ -52,7 +52,7 @@ export class VerificarCuentaComponent implements OnInit {
       } else {
         // Si alguien entra a esta URL sin un email, lo sacamos
         // this.alertService.showError('Ruta no válida');
-        console.error("No se proporcionó email");
+        //console.error("No se proporcionó email");
         this.router.navigate(['/login']);
       }
     });
@@ -66,7 +66,7 @@ export class VerificarCuentaComponent implements OnInit {
     this.isLoading = true;
     const codigoOtp = this.verifyForm.value.codigoOtp;
 
-    console.log('Enviando para verificar:', this.email, codigoOtp);
+    //console.log('Enviando para verificar:', this.email, codigoOtp);
 
     try {
       this.loadingService.show();
@@ -81,12 +81,12 @@ export class VerificarCuentaComponent implements OnInit {
           ['/login'],
         );
       });
-      console.log('Usuario creado exitosamente:', respuesta);
+      //console.log('Usuario creado exitosamente:', respuesta);
       //this.closeModal();
 
 
     } catch (error) {
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;

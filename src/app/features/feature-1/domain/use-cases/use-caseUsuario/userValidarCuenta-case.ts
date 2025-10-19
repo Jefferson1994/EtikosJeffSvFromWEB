@@ -12,14 +12,14 @@ export class usuarioVerificarCuentaUseCase {
 
 
   async execute(usuarioVerificarCuenta: UserverificarCuenta): Promise<userResponseEstandar> {
-    console.log("Creando usuario con datos:", JSON.stringify(usuarioVerificarCuenta));
+    //console.log("Creando usuario con datos:", JSON.stringify(usuarioVerificarCuenta));
     try {
       // ✅ La llamada al repositorio usando async/await
       const respuesta = await this.repository.verificarCuenta(usuarioVerificarCuenta);
-      console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
+      //console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error: any) {
-      console.error('Error en el caso de uso:', error);
+      //console.error('Error en el caso de uso:', error);
 
       // ✅ CORRECCIÓN: Accede al mensaje de error anidado
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';

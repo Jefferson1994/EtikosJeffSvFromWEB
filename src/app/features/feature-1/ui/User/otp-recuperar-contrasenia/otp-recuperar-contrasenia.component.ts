@@ -56,7 +56,7 @@ export class OtpRecuperarContraseniaComponent implements OnInit {
       if (params['email']) {
         this.email = params['email'];
       } else {
-        console.error("Falta el parámetro 'email'. Redirigiendo al inicio de recuperación.");
+        //console.error("Falta el parámetro 'email'. Redirigiendo al inicio de recuperación.");
         // Si no hay email, redirige al paso 1 (Asegúrate de que esta ruta exista)
         this.router.navigate(['/recuperar-contrasenia']);
       }
@@ -89,7 +89,7 @@ export class OtpRecuperarContraseniaComponent implements OnInit {
 
     // 2. Validación de formulario y coincidencia de contraseñas
     if (!form.valid || !this.passwordsMatch || !this.email) {
-      console.log('Formulario inválido o contraseñas no coinciden. No se envía.');
+      //console.log('Formulario inválido o contraseñas no coinciden. No se envía.');
       return;
     }
 
@@ -109,7 +109,7 @@ export class OtpRecuperarContraseniaComponent implements OnInit {
 
       const respuesta: userResponseEstandar = await this.recuperarContrasenia.execute(datosVerificacion);
       this.alertService.showSuccess(respuesta.message);
-      console.log('se envio el codigo exitosamente:', respuesta);
+      //console.log('se envio el codigo exitosamente:', respuesta);
       this.router.navigate(
         ['/login']
       );
@@ -117,7 +117,7 @@ export class OtpRecuperarContraseniaComponent implements OnInit {
 
 
     } catch (error) {
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;

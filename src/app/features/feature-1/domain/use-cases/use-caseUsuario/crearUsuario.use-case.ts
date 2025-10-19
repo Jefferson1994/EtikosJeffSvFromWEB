@@ -13,14 +13,14 @@ export class crearUsuarioUseCase {
 
 
   async execute(crearUsuario: CrearUsuarioDTO): Promise<CrearUsuarioResponse> {
-    console.log("Creando usuario con datos:", JSON.stringify(crearUsuario));
+    //console.log("Creando usuario con datos:", JSON.stringify(crearUsuario));
     try {
       // ✅ La llamada al repositorio usando async/await
       const respuesta = await this.repository.CrearUsuario(crearUsuario);
-      console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
+      //console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error: any) {
-      console.error('Error en el caso de uso:', error);
+      //console.error('Error en el caso de uso:', error);
 
       // ✅ CORRECCIÓN: Accede al mensaje de error anidado
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';

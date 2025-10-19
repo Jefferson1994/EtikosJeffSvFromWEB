@@ -37,7 +37,7 @@ export class UserApiRepository implements UserRepositorio {
   // Publica sin token
   async CrearUsuario(crearUsario: CrearUsuarioDTO): Promise<CrearUsuarioResponse> {
     const url = `${this.baseUrl}user/createUser`;
-    console.log('la url es ', url)
+    //console.log('la url es ', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
@@ -52,7 +52,7 @@ export class UserApiRepository implements UserRepositorio {
   // Publica sin token
   async verificarCuenta(usuarioVerificarCuenta: UserverificarCuenta): Promise<userResponseEstandar> {
     const url = `${this.baseUrl}user/verificarCuenta`;
-    console.log('la url es ', url)
+    //console.log('la url es ', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
@@ -65,7 +65,7 @@ export class UserApiRepository implements UserRepositorio {
   // Publica sin token
   async LoginUser(credentials: UserCredentials): Promise<LoginResult> {
     const url = `${this.baseUrl}user/login`;
-    console.log('url armada', url)
+    //console.log('url armada', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
@@ -81,7 +81,7 @@ export class UserApiRepository implements UserRepositorio {
   //publica sin token
   async solicitudRecuperarCOntrasenia(userRecuperar:solicitudRecuperarContrasenia ): Promise<userResponseEstandar> {
     const url = `${this.baseUrl}user/recuperarPasword`;
-    console.log('la url es ', url)
+    //console.log('la url es ', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
@@ -95,7 +95,7 @@ export class UserApiRepository implements UserRepositorio {
 
   async validarOtpRecuperarContrasenia(userRecuperar:cambiarContraseinaConCodigoOTP ): Promise<userResponseEstandar> {
     const url = `${this.baseUrl}user/resetPasword`;
-    console.log('la url es ', url)
+    //console.log('la url es ', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa
@@ -108,7 +108,7 @@ export class UserApiRepository implements UserRepositorio {
   //publica sin token
   async validarOtpLogin(userRecuperar:UserverificarCuenta ): Promise<LoginResult> {
     const url = `${this.baseUrl}user/validarOtp2Fa`;
-    console.log('la url es ', url)
+    //console.log('la url es ', url)
 
     try {
       // Usamos lastValueFrom para convertir el Observable en una promesa

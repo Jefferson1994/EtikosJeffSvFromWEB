@@ -43,12 +43,12 @@ export class RecuperarContraseniaComponent {
 
     if (this.forgotPasswordForm.invalid) {
       this.forgotPasswordForm.markAllAsTouched();
-      console.error('El formulario es inválido. Por favor, revisa los errores.');
+      //console.error('El formulario es inválido. Por favor, revisa los errores.');
       return;
     }
 
     const email = this.emailControl.value;
-    console.log(`✅ Correo recolectado para recuperación: ${email}`);
+    //console.log(`✅ Correo recolectado para recuperación: ${email}`);
 
     // Simular estado de carga y llamada a servicio (ejemplo asíncrono)
     this.isLoading = true;
@@ -60,7 +60,7 @@ export class RecuperarContraseniaComponent {
 
       const respuesta: userResponseEstandar = await this.recuperarContrasenia.execute(datosVerificacion);
       this.alertService.showSuccess(respuesta.message);
-      console.log('se envio el codigo exitosamente:', respuesta);
+      //console.log('se envio el codigo exitosamente:', respuesta);
       this.emailControl.setValue('');
       this.router.navigate(
           ['/otp-Recuperarcontrasenia'],
@@ -70,7 +70,7 @@ export class RecuperarContraseniaComponent {
 
 
     } catch (error) {
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al validar el correo.';
       if (error instanceof Error) {
         errorMessage = error.message;

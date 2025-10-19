@@ -14,11 +14,11 @@ export class UserEmpresasVinculadasUseCase {
 
     try {
       const respuesta = await this.repository.usuarioEmpresasVinculadas();
-      console.log("los productos obtenidos:", JSON.stringify(respuesta));
+      //console.log("los productos obtenidos:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error) {
-      console.error('Error en el caso de uso al obtener empresas:', error);
-      throw error; 
+      //console.error('Error en el caso de uso al obtener empresas:', error);
+      throw error;
     }
   }
 }

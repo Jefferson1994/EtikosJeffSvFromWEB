@@ -1,4 +1,4 @@
-// modelo de un producto
+
 export interface UserCredentials {
   email: string;
   password: string;
@@ -10,8 +10,7 @@ export interface cambiarPassword {
 }
 
 
-// src/app/features/feature-1/domain/models/userModelos.ts
-// ✅ Define esta interfaz para que coincida con la respuesta de tu API
+
 export interface UserResponse {
   message: string;
   user: {
@@ -23,8 +22,8 @@ export interface UserResponse {
     numero_identificacion: string;
     creado_en: string;
     activo: number;
-    autentificacion_dos_pasos_activa: number; // 1 o 0
-    negociosAdministrados: any[]; // O tipar con una interfaz si conoces la estructura
+    autentificacion_dos_pasos_activa: number;
+    negociosAdministrados: any[];
     rol: {
       id: number;
       nombre: string;

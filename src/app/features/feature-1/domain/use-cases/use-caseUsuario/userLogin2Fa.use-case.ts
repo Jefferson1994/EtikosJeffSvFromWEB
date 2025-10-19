@@ -17,10 +17,10 @@ export class userLogin2FAUseCase {
     try {
       // ✅ La llamada al repositorio usando async/await
       const respuesta = await this.repository.validarOtpLogin(usuarioVerificarCuenta);
-      console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
+      //console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error: any) {
-      console.error('Error en el caso de uso validar otp contras:', error);
+      //console.error('Error en el caso de uso validar otp contras:', error);
 
       let errorMessage = 'Error de red. No fue posible conectar con el servidor.';
       if (error instanceof HttpErrorResponse) {

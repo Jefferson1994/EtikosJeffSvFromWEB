@@ -1,5 +1,7 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
+import {  Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CrearUsuarioResponse, UserResponse, userResponseEstandar ,activaDesactivar2FA} from '../domain/models/userModelos'; // La interfaz corregida
 import { activarDesactivaR2FACase } from '../../../../../src/app/features/feature-1/domain/use-cases/use-caseUsuario/activar2FA.use.case';
@@ -12,21 +14,31 @@ export class AuthService {
   private userSource = new BehaviorSubject<UserResponse | null>(null);
   user$: Observable<UserResponse | null> = this.userSource.asObservable();
 
-  constructor(private activar2FAUseCase: activarDesactivaR2FACase) {
+  constructor(private activar2FAUseCase: activarDesactivaR2FACase,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.loadUserSession();
   }
 
   // Método para guardar el token y el usuario
   login(response: UserResponse): void {
-    localStorage.setItem('authToken', response.token);
-    // ✅ Usa 'response.user' en lugar de 'response.usuario'
-    localStorage.setItem('user', JSON.stringify(response.user));
+    if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('authToken', response.token);
+          // ✅ Usa 'response.user' en lugar de 'response.usuario'
+        localStorage.setItem('user', JSON.stringify(response.user));
+
+    }
+
     console.log('Usuario guardado en localStorage:', response.user);
     this.userSource.next(response);
   }
 
   // Método para cargar la sesión desde localStorage
   private loadUserSession(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+        return;
+    }
+
     const token = localStorage.getItem('authToken');
     const userString = localStorage.getItem('user');
 

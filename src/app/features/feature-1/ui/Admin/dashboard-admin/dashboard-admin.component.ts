@@ -93,7 +93,7 @@ export class DashboardAdminComponent implements OnInit {
         this.router.navigate(['/admin-dashboard', viewName]);
       }
 
-      console.log('Cambiando a la vista:', this.currentView());
+      //console.log('Cambiando a la vista:', this.currentView());
     }
 
   getNavItemsForCurrentUser(): NavItem[] {

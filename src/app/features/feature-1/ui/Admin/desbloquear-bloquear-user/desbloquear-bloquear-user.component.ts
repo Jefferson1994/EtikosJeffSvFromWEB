@@ -66,10 +66,10 @@ export class DesbloquearBloquearUserComponent {
       this.isAdminFound.set(false);
       this.loading = true;      // <-- Inicia la carga del componente
       this.loadingService.show(); // <-- Inicia la carga global
-      console.log('Buscando colaborador con cédula:', cedula);
+      //console.log('Buscando colaborador con cédula:', cedula);
       const userCredentials = { cedula: cedula };
       const respuesta = await this.buscarUserUseCase.execute(userCredentials);
-      console.log('la respues de consulta', JSON.stringify(respuesta))
+      //console.log('la respues de consulta', JSON.stringify(respuesta))
 
       if (respuesta && respuesta) {
         this.colaboradorData.set(respuesta.colaborador);
@@ -77,7 +77,7 @@ export class DesbloquearBloquearUserComponent {
         this.desbloquepunto.set(false);
         this.loading = false;     // <-- Detiene la carga del componente
         this.loadingService.hide();
-        console.log('Rol del colaborador encontrado:', respuesta.colaborador.rol?.nombre); // Usa '?.' por seguridad
+        //console.log('Rol del colaborador encontrado:', respuesta.colaborador.rol?.nombre); // Usa '?.' por seguridad
 
         // Compara directamente con respuesta.rol.nombre y usa 'Admin' (como en tu JSON)
         if (respuesta.colaborador.rol?.nombre === 'Admin') {
@@ -86,7 +86,7 @@ export class DesbloquearBloquearUserComponent {
           this.loading = false;
         }
       } else {
-        console.log('No se encontró un colaborador con esa cédula.');
+        //console.log('No se encontró un colaborador con esa cédula.');
         this.colaboradorData.set(null);
         this.camposBloqueados.set(false); // Desbloquea los campos para que se puedan editar
         this.desbloquepunto.set(true);
@@ -94,7 +94,7 @@ export class DesbloquearBloquearUserComponent {
         this.loadingService.hide();
       }
     } catch (error) {
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -102,7 +102,7 @@ export class DesbloquearBloquearUserComponent {
 
 
       this.alertService.showError(errorMessage);
-      console.error('Error al buscar colaborador:', error);
+      //console.error('Error al buscar colaborador:', error);
       this.colaboradorData.set(null);
       this.camposBloqueados.set(false); // Desbloquea los campos en caso de error
       this.desbloquepunto.set(true);
@@ -118,7 +118,7 @@ export class DesbloquearBloquearUserComponent {
     const colaborador = this.colaboradorData();
 
     if (!colaborador || this.isAdminFound()) { // Ya previene acción si es admin
-      console.log('Acción no permitida (no hay colaborador o es Admin).');
+      //console.log('Acción no permitida (no hay colaborador o es Admin).');
       return;
     }
 
@@ -132,7 +132,7 @@ export class DesbloquearBloquearUserComponent {
       let respuesta: userResponseEstandar;
       const userDataPayload = { numero_identificacion: cedulaUsuario }; // Objeto a enviar
 
-      console.log(`Intentando ${accion} al usuario ${cedulaUsuario}...`);
+      //console.log(`Intentando ${accion} al usuario ${cedulaUsuario}...`);
 
       // Llama al UseCase correspondiente
       if (nuevoEstado === 0) {
@@ -141,7 +141,7 @@ export class DesbloquearBloquearUserComponent {
         respuesta = await this.desbloquearUserUseCase.execute(userDataPayload);
       }
 
-      console.log(`Respuesta de la API (${accion}):`, JSON.stringify(respuesta));
+      //console.log(`Respuesta de la API (${accion}):`, JSON.stringify(respuesta));
 
       if (!respuesta.success) {
         // Lanza un error para que sea capturado por el catch
@@ -156,7 +156,7 @@ export class DesbloquearBloquearUserComponent {
       // 2. Muestra la alerta de éxito
       this.alertService.showSuccess(respuesta.message).then(() => {
         // 3. DESPUÉS de cerrar la alerta, limpia todo
-        console.log('Limpiando formulario después del éxito.');
+        //console.log('Limpiando formulario después del éxito.');
         this.colaboradorData.set(null);      // Limpia los datos del usuario encontrado
         this.cedulaData.set({ cedula: '' }); // Limpia el campo de búsqueda de cédula
         this.isAdminFound.set(false);
@@ -165,7 +165,7 @@ export class DesbloquearBloquearUserComponent {
 
     } catch (error: any) {
 
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -179,7 +179,7 @@ export class DesbloquearBloquearUserComponent {
 
       this.isProcessing.set(false);
       this.loadingService.hide(); // Detiene loading global si lo usaste
-      console.log(`--- Proceso de ${accion} finalizado ---`);
+      //console.log(`--- Proceso de ${accion} finalizado ---`);
     }
   }
 }

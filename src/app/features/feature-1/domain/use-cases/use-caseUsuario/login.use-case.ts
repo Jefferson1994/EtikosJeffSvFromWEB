@@ -13,12 +13,12 @@ export class LoginUseCase {
 
 
    execute(credentials: UserCredentials): Promise<LoginResult> {
-    console.log("Executing en el caso de uso :", credentials.email);
+    //console.log("Executing en el caso de uso :", credentials.email);
 
     return this.repository.LoginUser(credentials).then(UserResponse=>{
       return UserResponse
     }).catch(error=>{
-      console.error('Error en el caso de uso :', error);
+      //console.error('Error en el caso de uso :', error);
       throw error
 
     })

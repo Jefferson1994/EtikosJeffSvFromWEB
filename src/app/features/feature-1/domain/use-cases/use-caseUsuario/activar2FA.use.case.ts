@@ -11,14 +11,14 @@ export class activarDesactivaR2FACase {
   constructor(private readonly repository: UserApiRepository) { }
 
   async execute(userActivaDesactiva: activaDesactivar2FA): Promise<userResponseEstandar> {
-    console.log("cambiar pasword", JSON.stringify(userActivaDesactiva));
+    //console.log("cambiar pasword", JSON.stringify(userActivaDesactiva));
 
     try {
       const respuesta = await this.repository.activar2FA(userActivaDesactiva);
-      console.log("respuesta cambiar pasword:", JSON.stringify(respuesta));
+      //console.log("respuesta cambiar pasword:", JSON.stringify(respuesta));
       return respuesta; // <-- CORREGIDO
     } catch (error) {
-      console.error('Error en el caso de uso al cambiar password:', error);
+      //console.error('Error en el caso de uso al cambiar password:', error);
       throw error;
     }
   }

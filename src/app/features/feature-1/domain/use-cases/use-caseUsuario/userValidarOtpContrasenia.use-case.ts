@@ -13,14 +13,14 @@ export class validarOtpCambiarPasswordUseCase {
 
 
   async execute(userVerificar: cambiarContraseinaConCodigoOTP): Promise<userResponseEstandar> {
-    console.log("Creando usuario con datos:", JSON.stringify(userVerificar));
+    //console.log("Creando usuario con datos:", JSON.stringify(userVerificar));
     try {
       // ✅ La llamada al repositorio usando async/await
       const respuesta = await this.repository.validarOtpRecuperarContrasenia(userVerificar);
-      console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
+      //console.log("Respuesta del repositorio:", JSON.stringify(respuesta));
       return respuesta;
     } catch (error: any) {
-      console.error('Error en el caso de uso validar otp contras:', error);
+      //console.error('Error en el caso de uso validar otp contras:', error);
 
       let errorMessage = 'Error de red. No fue posible conectar con el servidor.';
       if (error instanceof HttpErrorResponse) {

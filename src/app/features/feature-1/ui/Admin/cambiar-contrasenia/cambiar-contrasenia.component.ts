@@ -45,7 +45,7 @@ export class CambiarContraseniaComponent {
   passwordsMatch = false; // Controla si el botón se habilita
 
   constructor(private cambiarPasswordUseCase: userCambiarPaswordUseCase) {
-    console.log('--- CambiarContraseniaComponent cargado ---');
+    //console.log('--- CambiarContraseniaComponent cargado ---');
   }
 
   checkPasswordMatch(): void {
@@ -53,24 +53,24 @@ export class CambiarContraseniaComponent {
 
     if (nuevaContrasena && confirmarContrasena && nuevaContrasena === confirmarContrasena) {
       this.passwordsMatch = true;
-      console.log('Validador: SÍ COINCIDEN');
+      //console.log('Validador: SÍ COINCIDEN');
     } else {
       this.passwordsMatch = false;
       if (nuevaContrasena || confirmarContrasena) {
-        console.log('Validador: NO COINCIDEN');
+        //console.log('Validador: NO COINCIDEN');
       }
     }
   }
 
   async onSubmit(form: NgForm): Promise<void> {
 
-    console.log('--- Se ha pulsado Submit ---');
-    console.log('¿Formulario es válido?', form.valid);
-    console.log('¿Contraseñas coinciden?', this.passwordsMatch);
+    //console.log('--- Se ha pulsado Submit ---');
+    //console.log('¿Formulario es válido?', form.valid);
+    //console.log('¿Contraseñas coinciden?', this.passwordsMatch);
 
     // Doble chequeo (aunque el botón debería estar deshabilitado)
     if (!form.valid || !this.passwordsMatch) {
-      console.log('Formulario inválido, no se envía.');
+      //console.log('Formulario inválido, no se envía.');
       return;
     }
 
@@ -90,12 +90,12 @@ export class CambiarContraseniaComponent {
         this.alertService.showSuccess(respuesta.message);
         form.resetForm();
         this.passwordsMatch = false;
-        console.log('la respuesta de cambir la contrasenia:', JSON.stringify(respuesta));
+        //console.log('la respuesta de cambir la contrasenia:', JSON.stringify(respuesta));
       }
 
     } catch (error) {
       //manejo de errores
-       console.error('Error al crear el usuario:', JSON.stringify(error));
+      // console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;

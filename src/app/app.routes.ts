@@ -5,7 +5,6 @@ import { CambiarContraseniaComponent } from './features/feature-1/ui/Admin/cambi
 import { DashboardAdminComponent } from './features/feature-1/ui/Admin/dashboard-admin/dashboard-admin.component';
 import { Autentificacion2faComponent } from './features/feature-1/ui/Admin/autentificacion2fa/autentificacion2fa.component';
 import { DesbloquearBloquearUserComponent } from './features/feature-1/ui/Admin/desbloquear-bloquear-user/desbloquear-bloquear-user.component';
-import { AgregarColaboradorComponent } from './features/feature-1/ui/Admin/agregar-colaborador/agregar-colaborador.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RecuperarContraseniaComponent } from './features/feature-1/ui/User/recuperar-contrasenia/recuperar-contrasenia.component';

@@ -51,7 +51,7 @@ export class CrearCuentaComponent implements OnInit {
 
   async onSubmit(form: NgForm): Promise<void> {
     if (!form.valid) {
-      console.log('Formulario no válido. Por favor, revisa los campos.');
+      //console.log('Formulario no válido. Por favor, revisa los campos.');
       return;
     }
 
@@ -67,12 +67,12 @@ export class CrearCuentaComponent implements OnInit {
           { queryParams: { email: email } }
         );
       });
-      console.log('Usuario creado exitosamente:', respuesta);
+      //console.log('Usuario creado exitosamente:', respuesta);
       //this.closeModal();
 
 
     } catch (error) {
-      console.error('Error al crear el usuario:', JSON.stringify(error));
+      //console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -140,10 +140,10 @@ export class CrearCuentaComponent implements OnInit {
 
     //  Ejecutar la validación local
     if (this.esCedulaValida(cedula)) {
-      console.log('Cédula matemáticamente válida.');
+      //console.log('Cédula matemáticamente válida.');
 
     } else {
-      console.log('Cédula inválida según algoritmo.');
+      //console.log('Cédula inválida según algoritmo.');
       this.errorValidacion = 'El número de cédula no es válido.';
       this.registro.numero_identificacion = '';
       this.alertService.showError(this.errorValidacion);

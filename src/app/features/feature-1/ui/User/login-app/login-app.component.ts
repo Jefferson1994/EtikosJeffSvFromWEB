@@ -45,17 +45,17 @@ export class LoginAppComponent {
       email: this.email,
       password: this.password
     };
-    console.log("Login datasssss:", credentials);
+    //console.log("Login datasssss:", credentials);
 
     try {
       this.loadingService.show();
 
       const response: LoginResult = await this.loginCase.execute(credentials);
-      console.log('Login successful!', JSON.stringify(response));
+      //console.log('Login successful!', JSON.stringify(response));
 
 
       if (this.isTwoFactorRequired(response)) {
-        console.log('2FA Requerido. Abriendo modal.', response.message);
+        //console.log('2FA Requerido. Abriendo modal.', response.message);
         this.showModalOtp = true;
 
         return;
@@ -65,15 +65,15 @@ export class LoginAppComponent {
       this.authService.login(userResponse);
 
       if (response.user.rol.nombre === 'Admin') {
-        console.log('Redirigiendo a la página de administrador...');
+        //console.log('Redirigiendo a la página de administrador...');
         this.router.navigate(['/admin-dashboard']);
       } else if (response.user.rol.nombre === 'Usuario') {
-        console.log('esta en la pagina del Usuario');
+        //console.log('esta en la pagina del Usuario');
         this.router.navigate(['/admin-dashboard']);
       }
 
     } catch (error : any) {
-      console.error('Login failed:', error);
+      //console.error('Login failed:', error);
 
         let customErrorMessage = 'No se pudo iniciar sesión. Verifique sus credenciales.';
         if (error.error && error.error.message) {
@@ -102,7 +102,7 @@ export class LoginAppComponent {
   }
 
   onOtpValidated(response: LoginResult): void {
-    console.log("✅ 2FA completado. Recibido token y usuario del modal.");
+    //console.log("✅ 2FA completado. Recibido token y usuario del modal.");
 
     // 1. Ocultar el modal inmediatamente
     this.showModalOtp = false;
@@ -112,10 +112,10 @@ export class LoginAppComponent {
     this.authService.login(userResponse);
 
     if (userResponse.user.rol.nombre === 'Admin') {
-      console.log('Redirigiendo a la página de administrador...');
+      //console.log('Redirigiendo a la página de administrador...');
       this.router.navigate(['/admin-dashboard']);
     } else if (userResponse.user.rol.nombre === 'Usuario') {
-      console.log('esta en la pagina del Usuario');
+      //console.log('esta en la pagina del Usuario');
       this.router.navigate(['/admin-dashboard']);
     }
 

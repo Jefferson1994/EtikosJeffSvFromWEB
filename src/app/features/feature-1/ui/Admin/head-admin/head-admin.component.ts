@@ -56,7 +56,7 @@ export class HeadAdminComponent {
       const response = await this.cerrarSesionUseCase.execute();
 
       if (response.success) {
-        console.log('Cierre de sesión exitoso. Eliminando credenciales locales.');
+        //console.log('Cierre de sesión exitoso. Eliminando credenciales locales.');
       }
 
       this.authService.logout();
@@ -64,7 +64,7 @@ export class HeadAdminComponent {
       this.router.navigate(['/login']);
 
     } catch (error) {
-      console.error('Error al cerrar sesión (Front/Back):', error);
+      //console.error('Error al cerrar sesión (Front/Back):', error);
       this.authService.logout();
       this.alertService.showError('Error al cerrar sesión. Por favor, inténtelo de nuevo.');
       this.router.navigate(['/login']);
