@@ -72,9 +72,17 @@ export class LoginAppComponent {
         this.router.navigate(['/admin-dashboard']);
       }
 
-    } catch (error) {
+    } catch (error : any) {
       console.error('Login failed:', error);
-      this.alertService.showError('No se pudo iniciar sesión. Verifique sus credenciales.');
+
+        let customErrorMessage = 'No se pudo iniciar sesión. Verifique sus credenciales.';
+        if (error.error && error.error.message) {
+            customErrorMessage = error.error.message;
+        } else if (error.message) {
+             customErrorMessage = "Error de conexión: " + error.message;
+        }
+
+        this.alertService.showError(customErrorMessage);
     } finally {
       this.loadingService.hide();
     }

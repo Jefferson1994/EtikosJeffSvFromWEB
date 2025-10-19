@@ -16,10 +16,14 @@ export class userCambiarPaswordUseCase {
     try {
       const respuesta = await this.repository.cambiarPassword(userCambiarPassword);
       console.log("respuesta cambiar pasword:", JSON.stringify(respuesta));
-      return respuesta; // <-- CORREGIDO
-    } catch (error) {
-      console.error('Error en el caso de uso al cambiar password:', error);
-      throw error;
+      return respuesta;
+    } catch (error: any) {
+      console.error('Error en el caso de uso:', error);
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      if (error && error.error && error.error.mensaje) {
+        errorMessage = error.error.mensaje;
+      }
+      throw new Error(errorMessage);
     }
   }
 }

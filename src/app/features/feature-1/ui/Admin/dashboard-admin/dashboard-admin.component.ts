@@ -41,14 +41,12 @@ export class DashboardAdminComponent implements OnInit {
     // 1. Dashboard (no tiene sub-opciones)
     {
       name: 'Dashboard',
-      view: 'dashboard',
+      view: '',
       svgPath: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z', // Ícono de casa
       subItems: [],
       roles: ['Admin','Usuario']
 
     },
-
-
     // 4. Productos
     {
       name: '  Administrar Contraseñas',

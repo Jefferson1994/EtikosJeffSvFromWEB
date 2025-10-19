@@ -6,6 +6,7 @@ import { userCambiarPassword, userResponseEstandar } from '../../../domain/model
 import { AlertService } from '../../../services/alert.service';
 import { LoadingService } from '../../../services/loading.service';
 import { userCambiarPaswordUseCase } from '../../../domain/use-cases/use-caseUsuario/cambiarPassword.use.case';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface ChangePasswordPayload {
   contrasenaActual: string;
@@ -93,16 +94,14 @@ export class CambiarContraseniaComponent {
       }
 
     } catch (error) {
-      console.error('Error capturado por el Componente:', error);
-
-      let errorMessage = 'Ocurrió un error inesperado. Inténtalo de nuevo.';
+      //manejo de errores
+       console.error('Error al crear el usuario:', JSON.stringify(error));
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;
+      }
 
-      }
-      else if (typeof error === 'string') {
-        errorMessage = error;
-      }
+
       this.alertService.showError(errorMessage);
     } finally {
       this.loadingService.hide();
@@ -113,5 +112,5 @@ export class CambiarContraseniaComponent {
 
   }
 
-  
+
 }

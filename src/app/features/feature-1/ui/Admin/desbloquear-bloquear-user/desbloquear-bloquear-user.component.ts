@@ -9,6 +9,7 @@ import { AlertService } from '../../../services/alert.service';
 import { userBloquearUseCase } from '../../../domain/use-cases/use-caseUsuario/userBloquear.use-case';
 import { bloquearUsuario, userResponseEstandar, } from '../../../domain/models/userModelos';
 import { userDesBloquearUseCase } from '../../../domain/use-cases/use-caseUsuario/userDesbloquear.use-case';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-desbloquear-bloquear-user',
@@ -93,6 +94,14 @@ export class DesbloquearBloquearUserComponent {
         this.loadingService.hide();
       }
     } catch (error) {
+      console.error('Error al crear el usuario:', JSON.stringify(error));
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+
+      this.alertService.showError(errorMessage);
       console.error('Error al buscar colaborador:', error);
       this.colaboradorData.set(null);
       this.camposBloqueados.set(false); // Desbloquea los campos en caso de error
@@ -106,71 +115,71 @@ export class DesbloquearBloquearUserComponent {
   }
 
   async cambiarEstado(nuevoEstado: 0 | 1): Promise<void> {
-  const colaborador = this.colaboradorData();
+    const colaborador = this.colaboradorData();
 
-  if (!colaborador || this.isAdminFound()) { // Ya previene acción si es admin
-    console.log('Acción no permitida (no hay colaborador o es Admin).');
-    return;
-  }
-
-  const accion = nuevoEstado === 0 ? 'bloquear' : 'desbloquear';
-  const cedulaUsuario = colaborador.numero_identificacion;
-
-  this.isProcessing.set(true);
-  this.loadingService.show(); // Inicia loading global si lo usas aquí
-
-  try {
-    let respuesta: userResponseEstandar;
-    const userDataPayload = { numero_identificacion: cedulaUsuario }; // Objeto a enviar
-
-    console.log(`Intentando ${accion} al usuario ${cedulaUsuario}...`);
-
-    // Llama al UseCase correspondiente
-    if (nuevoEstado === 0) {
-      respuesta = await this.bloquearUserUseCase.execute(userDataPayload);
-    } else {
-      respuesta = await this.desbloquearUserUseCase.execute(userDataPayload);
+    if (!colaborador || this.isAdminFound()) { // Ya previene acción si es admin
+      console.log('Acción no permitida (no hay colaborador o es Admin).');
+      return;
     }
 
-    console.log(`Respuesta de la API (${accion}):`, JSON.stringify(respuesta));
+    const accion = nuevoEstado === 0 ? 'bloquear' : 'desbloquear';
+    const cedulaUsuario = colaborador.numero_identificacion;
 
-    // Verifica si la API reportó un error
-    if (!respuesta.success) {
-      // Lanza un error para que sea capturado por el catch
-      throw new Error(respuesta.message || `Falló la operación de ${accion}.`);
+    this.isProcessing.set(true);
+    this.loadingService.show(); // Inicia loading global si lo usas aquí
+
+    try {
+      let respuesta: userResponseEstandar;
+      const userDataPayload = { numero_identificacion: cedulaUsuario }; // Objeto a enviar
+
+      console.log(`Intentando ${accion} al usuario ${cedulaUsuario}...`);
+
+      // Llama al UseCase correspondiente
+      if (nuevoEstado === 0) {
+        respuesta = await this.bloquearUserUseCase.execute(userDataPayload);
+      } else {
+        respuesta = await this.desbloquearUserUseCase.execute(userDataPayload);
+      }
+
+      console.log(`Respuesta de la API (${accion}):`, JSON.stringify(respuesta));
+
+      if (!respuesta.success) {
+        // Lanza un error para que sea capturado por el catch
+        throw new Error(respuesta.message || `Falló la operación de ${accion}.`);
+      }
+
+      this.colaboradorData.update(currentData => {
+        if (!currentData) return null;
+        return { ...currentData, activo: nuevoEstado };
+      });
+
+      // 2. Muestra la alerta de éxito
+      this.alertService.showSuccess(respuesta.message).then(() => {
+        // 3. DESPUÉS de cerrar la alerta, limpia todo
+        console.log('Limpiando formulario después del éxito.');
+        this.colaboradorData.set(null);      // Limpia los datos del usuario encontrado
+        this.cedulaData.set({ cedula: '' }); // Limpia el campo de búsqueda de cédula
+        this.isAdminFound.set(false);
+        //this.errorBusqueda.set(null);      // Limpia cualquier error de búsqueda previo
+      });
+
+    } catch (error: any) {
+
+      console.error('Error al crear el usuario:', JSON.stringify(error));
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+
+      this.alertService.showError(errorMessage);
+
+
+    } finally {
+
+      this.isProcessing.set(false);
+      this.loadingService.hide(); // Detiene loading global si lo usaste
+      console.log(`--- Proceso de ${accion} finalizado ---`);
     }
-
-    // --- ÉXITO ---
-    // 1. Actualiza el estado local en la señal ANTES de limpiar,
-    //    para que el usuario vea el cambio brevemente si es necesario.
-    this.colaboradorData.update(currentData => {
-      if (!currentData) return null;
-      return { ...currentData, activo: nuevoEstado };
-    });
-
-    // 2. Muestra la alerta de éxito
-    this.alertService.showSuccess(respuesta.message).then(() => {
-      // 3. DESPUÉS de cerrar la alerta, limpia todo
-      console.log('Limpiando formulario después del éxito.');
-      this.colaboradorData.set(null);      // Limpia los datos del usuario encontrado
-      this.cedulaData.set({ cedula: '' }); // Limpia el campo de búsqueda de cédula
-      this.isAdminFound.set(false);      
-      //this.errorBusqueda.set(null);      // Limpia cualquier error de búsqueda previo
-    });
-
-  } catch (error: any) {
-    // --- MANEJO DE ERRORES ---
-    console.error(`Error al ${accion} usuario:`, error);
-    // Intenta obtener el mensaje específico del error
-    const errorMessage = error?.message || `Error al ${accion} el usuario.`;
-    this.alertService.showError(errorMessage);
-
-  } finally {
-    // --- SIEMPRE SE EJECUTA ---
-    // Finaliza el estado de procesamiento
-    this.isProcessing.set(false);
-    this.loadingService.hide(); // Detiene loading global si lo usaste
-    console.log(`--- Proceso de ${accion} finalizado ---`);
   }
-}
 }

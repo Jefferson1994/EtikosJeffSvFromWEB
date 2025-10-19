@@ -19,7 +19,7 @@ export class LoginUseCase {
       return UserResponse
     }).catch(error=>{
       console.error('Error en el caso de uso :', error);
-      throw new Error('No se pudo logear');
+      throw error
 
     })
   }

@@ -16,10 +16,13 @@ export class buscarUserUseCase {
       const respuesta = await this.repository.BuscarUser(userBuscar);
       //console.log("usuario obteido", JSON.stringify(respuesta));
       return respuesta;
-    } catch (error) {
-      console.error('Error en el caso de uso al obtener user :', error);
-      // Lanza un error más descriptivo que pueda ser manejado por el componente.
-      throw new Error('No se pudieron obtener las empresas. Inténtalo de nuevo más tarde.');
+    } catch (error: any) {
+      console.error('Error en el caso de uso:', error);
+      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      if (error && error.error && error.error.mensaje) {
+        errorMessage = error.error.mensaje;
+      }
+      throw new Error(errorMessage);
     }
   }
 }

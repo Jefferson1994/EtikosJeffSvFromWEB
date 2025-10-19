@@ -71,14 +71,12 @@ export class RecuperarContraseniaComponent {
 
     } catch (error) {
       console.error('Error al crear el usuario:', JSON.stringify(error));
-      let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
+      let errorMessage = 'Ocurrió un error inesperado al validar el correo.';
       if (error instanceof Error) {
         errorMessage = error.message;
       }
-
-
       this.alertService.showError(errorMessage);
-      // Muestra un mensaje de error al usuario
+
     } finally {
       this.loadingService.hide();
       this.isLoading = false;
