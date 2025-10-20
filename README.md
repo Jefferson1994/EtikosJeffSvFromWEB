@@ -1,27 +1,69 @@
-# ServiciosBancariosFront
+# Frontend Web  - Prueba Técnica Etikos [cite: 1]
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
+Este repositorio contiene el cliente web (Frontend) del proyecto "Prueba Técnica -Etikos Jardín azuayo". Esta aplicación está desarrollada en **Angular 17** e implementa una **Arquitectura Limpia (Clean Architecture)** para garantizar la mantenibilidad y escalabilidad del código.
 
-## Development server
+Esta aplicación consume una API REST desarrollada en Node.js, la cual gestiona la lógica de negocio, la autenticación de usuarios, y la comunicación con servicios de notificación como Gmail y Twilio y la base de datos.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## ✨ Características Principales
 
-## Code scaffolding
+* **Autenticación Segura:** Implementación de inicio de sesión con correo y contraseña Las contraseñas se almacenan de forma segura usando Hashing con Bcrypt
+* **Autenticación de Doble Factor (2FA):** Los usuarios pueden activar un segundo factor de autenticación Al iniciar sesión, el sistema solicitará un código OTP enviado por correo electrónico y SMS
+* **Recuperación de Contraseña:** Flujo seguro de recuperación de contraseña mediante la validación de un OTP enviado al usuario.
+* **Gestión de Tokens (JWT):** Uso de JSON Web Tokens para asegurar las peticiones a rutas protegidas de la API.
+* **Panel de Administración:** Funcionalidad para usuarios administradores que permite buscar, bloquear y desbloquear a otros usuarios del sistema.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## 🚀 Prerrequisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Antes de comenzar, asegúrate de tener instalado lo siguiente en tu máquina local:
 
-## Running unit tests
+* **Node.js**: Se recomienda la versión v18.13.0 o superior (puedes verificar con `node -v`).
+* **Angular CLI**: Debes tener instalada la versión 17 de Angular CLI de forma global.
+    npm install -g @angular/cli@17
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## ⚙️ Instalación y Puesta en Marcha
 
-## Running end-to-end tests
+Sigue estos pasos para obtener una copia local del proyecto y ponerla en funcionamiento:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1.  **Clonar el repositorio**
 
-## Further help
+    git clone y el link de este repositorio
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+2.  **Acceder al directorio del proyecto**
+    cd EtikosJeffSvFromWEB
+
+
+3.  **Instalar dependencias**
+    npm install
+
+
+4.  **Configurar el Entorno**
+    Este proyecto necesita conectarse a la API de backend.  `src/app/environments/environment.ts` hay dos url podemos apuntar al back local o al back desplegado 
+    en render.
+
+    El prefijo de la API de preproducción desplegada en Render es: `https://etikosjeffsvback.onrender.com/`.
+
+5.  **Ejecutar el Servidor de Desarrollo**
+    Inicia el servidor de desarrollo local:
+    ```bash
+    ng serve
+    ```
+    Abre tu navegador y visita `http://localhost:4200/`. La aplicación se recargará automáticamente
+
+## 🧪 Credenciales de Prueba (Administrador)
+
+Para probar las funcionalidades de administración como bloquear/desbloquear usuarios, puedes utilizar las siguientes credenciales:
+
+* **Email:** `pruebaEtikos1@outlook.com` 
+* **Password:** `Etikos12025#` 
+
+### 6. Arquitectura 
+
+Arquitectura General del sistema 
+
+![Diagrama de Arquitectura del Sistema](./docs/ArquitecturaGeneral.png)
+
+
+Arquitectura del Backend N Capas
+
+![Diagrama de Arquitectura del Backend](./docs/cleanArquitecture.png)
