@@ -86,7 +86,7 @@ export class VerificarCuentaComponent implements OnInit {
 
 
     } catch (error) {
-      //console.error('Error al crear el usuario:', JSON.stringify(error));
+      console.error('Error al crear el usuario:', JSON.stringify(error));
       let errorMessage = 'Ocurrió un error inesperado al registrar el usuario.';
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -97,6 +97,7 @@ export class VerificarCuentaComponent implements OnInit {
       // Muestra un mensaje de error al usuario
     } finally {
       this.loadingService.hide();
+       this.isLoading = false;
     }
 
 
