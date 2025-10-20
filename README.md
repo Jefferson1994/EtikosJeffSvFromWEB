@@ -1,4 +1,4 @@
-# Frontend Web  - Prueba Técnica Etikos [cite: 1]
+# Frontend Web  - Prueba Técnica Etikos 
 
 Este repositorio contiene el cliente web (Frontend) del proyecto "Prueba Técnica -Etikos Jardín azuayo". Esta aplicación está desarrollada en **Angular 17** e implementa una **Arquitectura Limpia (Clean Architecture)** para garantizar la mantenibilidad y escalabilidad del código.
 
@@ -7,7 +7,7 @@ Esta aplicación consume una API REST desarrollada en Node.js, la cual gestiona 
 ## ✨ Características Principales
 
 * **Autenticación Segura:** Implementación de inicio de sesión con correo y contraseña Las contraseñas se almacenan de forma segura usando Hashing con Bcrypt
-* **Autenticación de Doble Factor (2FA):** Los usuarios pueden activar un segundo factor de autenticación Al iniciar sesión, el sistema solicitará un código OTP enviado por correo electrónico y SMS
+* **Autenticación de Doble Factor (2FA):** Los usuarios pueden activar un segundo factor de autenticación. Al iniciar sesión, el sistema solicitará un código OTP enviado por correo electrónico y SMS
 * **Recuperación de Contraseña:** Flujo seguro de recuperación de contraseña mediante la validación de un OTP enviado al usuario.
 * **Gestión de Tokens (JWT):** Uso de JSON Web Tokens para asegurar las peticiones a rutas protegidas de la API.
 * **Panel de Administración:** Funcionalidad para usuarios administradores que permite buscar, bloquear y desbloquear a otros usuarios del sistema.
@@ -15,7 +15,6 @@ Esta aplicación consume una API REST desarrollada en Node.js, la cual gestiona 
 
 ## 🚀 Prerrequisitos
 
-Antes de comenzar, asegúrate de tener instalado lo siguiente en tu máquina local:
 
 * **Node.js**: Se recomienda la versión v18.13.0 o superior (puedes verificar con `node -v`).
 * **Angular CLI**: Debes tener instalada la versión 17 de Angular CLI de forma global.
@@ -23,7 +22,6 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu máquina loc
 
 ## ⚙️ Instalación y Puesta en Marcha
 
-Sigue estos pasos para obtener una copia local del proyecto y ponerla en funcionamiento:
 
 1.  **Clonar el repositorio**
 
@@ -64,6 +62,6 @@ Arquitectura General del sistema
 ![Diagrama de Arquitectura del Sistema](./docs/ArquitecturaGeneral.png)
 
 
-Arquitectura del Backend N Capas
+Arquitectura Limpia en  el Frontend Web
 
 ![Diagrama de Arquitectura del Backend](./docs/cleanArquitecture.png)
