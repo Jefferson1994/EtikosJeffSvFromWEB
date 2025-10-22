@@ -1,9 +1,5 @@
 export const environment = {
   production: false,
-  //apiUrl: 'https://appcontrolbarberias.onrender.com/'
+  //apiUrl: 'https://etikosjeffsvback.onrender.com/'//url preproduccion
   apiUrl: 'http://localhost:3000/'
 };
-/*export const environment = {
-  production: true,
-  apiUrl: 'http://localhost:3000' // Tu URL del servidor
-};*/
