@@ -25,7 +25,7 @@ Esta aplicación consume una API REST desarrollada en Node.js, la cual gestiona 
 
 1.  **Clonar el repositorio**
 
-    git clone y el link de este repositorio
+    git clone `https://github.com/Jefferson1994/EtikosJeffSvFromWEB.git`
 
 2.  **Acceder al directorio del proyecto**
     cd EtikosJeffSvFromWEB
